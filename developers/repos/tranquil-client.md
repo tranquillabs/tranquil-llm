@@ -149,6 +149,28 @@ Channel rules: [rules/browser.md](../rules/browser.md).
 No binary ships yet, but changes must keep the build ready for one. The ADR-0028 release gate
 applies.
 
+## Releases
+
+Developer-preview releases are source releases: tags and a GitHub release, no binary. In order:
+
+1. **Each owned package with changes:** bump `version` in its `package.json`, commit
+   `chore: vX.Y.Z`, add an annotated tag `vX.Y.Z` (message `vX.Y.Z`), push the branch and the tag.
+   Packages with no changes keep their version.
+2. **tranquil-client:** bump `version`, run `node script/release-manifest.js YYYY-MM-DD` (after
+   step 1, so it records the tagged commits), commit `chore: vX.Y.Z release manifest`, add an
+   annotated tag with the message `vX.Y.Z — Title`, push both.
+3. **GitHub release** on tranquil-client, titled `vX.Y.Z — Title`, with the summary and a "Full
+   release notes" link to `https://www.tranquillabs.dev/releases/vX.Y.Z`.
+4. **www-tranquil:** move the entry from `drafts` to the top of `published` and push, which
+   publishes it ([rules/docs.md](../rules/docs.md#release-notes)). Announce with
+   `deno task toot` once it's live.
+
+**Tag names collide with Atom's.** The fork inherits Atom's 2013 tags (`v0.3.0`, `v0.4.0`, …,
+lightweight tags on old commits). `git tag -a vX.Y.Z` fails when one exists, and a push then sends
+Atom's. Check first with `git cat-file -t vX.Y.Z`: `commit` means Atom's. Delete it locally,
+create Tranquil's tag, and push it with `--force`, as every release since v0.1.0 has replaced
+Atom's tag of the same name.
+
 ## ppm
 
 `ppm` is a git submodule of Tranquil's fork, `tranquillabs/tranquil-ppm`, built once after cloning
