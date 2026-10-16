@@ -35,8 +35,8 @@ sandbox gets bypassed.
   Node-enabled windows, and the runner grants the port to any script with a browser grant, so a
   `tabs`-only script can run Node.js in the main window. The decision: no port unless
   `TRANQUIL_CDP_PORT` is set and the app is unpackaged; the host attaches `webContents.debugger`
-  per tab and forwards only each grant's operations. **No release ships until the port is closed
-  by default.** When implementing, add a `lint:security` rule: `remote-debugging-port` only behind
-  `!app.isPackaged`.
+  per tab and forwards only each grant's operations. **No native build ships until the port is
+  closed by default.** When implementing, add a `lint:security` rule: `remote-debugging-port` only
+  behind `!app.isPackaged`.
 
 Related: [browser.md](browser.md) (IPC channels, code in pages), [automations.md](automations.md).
