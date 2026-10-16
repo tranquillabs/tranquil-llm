@@ -1,0 +1,8 @@
+{
+  "name": "tranquil-llm",
+  "version": "0.1.0",
+  "description": "Everything Tranquil writes for LLMs: rules for agents working on Tranquil's repos (developers/, never shipped) and the user guides shipped to users' LLMs (users/, published to ~/.tranquil/llm/)",
+  "private": true,
+  "license": "MIT",
+  "files": ["users/"]
+}

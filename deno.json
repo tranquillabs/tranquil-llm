@@ -1,0 +1,17 @@
+{
+  "//": "The sibling SDK the user guides are tested against is declared here, once. tranquil-llm/ names this repo's root, so tests find files without counting ../ from their own folder.",
+  "imports": {
+    "@std/assert": "jsr:@std/assert@^1",
+    "@std/fs": "jsr:@std/fs@^1",
+    "@std/path": "jsr:@std/path@^1",
+    "tranquil-llm/": "./",
+    "tranquil/automation": "../tranquil-automations/deno/mod.ts",
+    "tranquil/automation/testing": "../tranquil-automations/deno/testing.ts"
+  },
+  "compilerOptions": {
+    "strict": true
+  },
+  "tasks": {
+    "test": "deno test --allow-read=.,../tranquil-automations,$TMPDIR --allow-write=$TMPDIR --allow-run=deno --allow-env=TMPDIR,HOME,DENO_DIR test/"
+  }
+}
