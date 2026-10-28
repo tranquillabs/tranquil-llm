@@ -44,7 +44,8 @@ window being tested (⌃⌥⌘L, Window: Reload). Reload is a full renderer rese
   restore, before concluding a fix didn't take.
 - **What needs what:** package `lib/` code and `package.json` → Window: Reload; a webview preload
   → reload the tab (key-forwarding changes: full restart); main-process code (`src/main-process/`,
-  `cz-init.js`) and menus → full app restart.
+  `cz-init.js`), menus, and the user guides in tranquil-llm `users/` (copied to `~/.tranquil/llm/`
+  only when the app starts) → full app restart.
 
 ## Reading the app's output
 
