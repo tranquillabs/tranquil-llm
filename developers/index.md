@@ -41,6 +41,7 @@ these files are relative to where they sit in tranquil-llm: `rules/git.md` here 
 | [rules/browser.md](rules/browser.md) | touching browser tabs, webviews, the page bridge, IPC channels, or code run in pages |
 | [rules/keyboard.md](rules/keyboard.md) | adding or fixing a shortcut, focus handling, menu accelerators |
 | [rules/automations.md](rules/automations.md) | changing the automation runner or SDK |
+| [rules/frontend.md](rules/frontend.md) | building any user interface in Tranquil's apps: Svelte, Skeleton, and only packages from the Svelte packages list |
 | [rules/ui-themes.md](rules/ui-themes.md) | styling anything, the settings panel, rendering glitches |
 | [rules/docs.md](rules/docs.md) | writing docs, ADRs, delivery notes, plans or release notes |
 
