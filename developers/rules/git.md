@@ -19,6 +19,9 @@ waits for an explicit go-ahead too.
 
 - **Owned repos:** work on `main`. No pull requests: when a feature branch is done, merge it
   straight into `main` and move on.
+- **Multi-step work:** one branch per step, named `NN-<feature>/<step>`, each reviewed before it's
+  committed and merged before the next starts. See
+  [working-together.md](working-together.md#multi-step-work-goes-in-reviewed-steps).
 - **tranquil-client:** `tranquil/main` is the development branch; all work goes there. `master`
   tracks `upstream/master` (Pulsar) and is never committed or merged to directly. Changes reach it
   only through an intentional `git merge --allow-unrelated-histories tranquil/main` when

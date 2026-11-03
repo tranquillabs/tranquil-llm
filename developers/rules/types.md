@@ -28,6 +28,11 @@ Use the real type. When it is not obvious, reach for these:
 | a result type the caller names | a type parameter, defaulting to `unknown`, never `any` |
 | JSON from outside (a socket, an env var, a file, a reply) | a declared interface, cast once where the data enters, with a comment saying whose contract it is |
 
+- **Types and interfaces go in their own files, apart from code.** They are building blocks, not
+  code. A package's `types/` folder holds them, one file per module they describe, named after it
+  (`types/workbook-format.ts` for `lib/workbook-format.js`). Code and tests import them with
+  `import type`. A types file holds only `type` and `interface` declarations. It's plain `.ts`,
+  not `.d.ts`, so `lint:security`'s type checks cover it.
 - **Closed sets of names are literal types, not `string`.** Grants (`Capability`), error codes
   (`ErrorCode`), CDP commands and events (`Commands`, `Events` in `cdp.ts`), IPC channels
   (`CHANNELS`): one `as const` list or union, imported wherever a name is used, so a typo fails

@@ -16,16 +16,18 @@ these files are relative to where they sit in tranquil-llm: `rules/git.md` here 
 ## Always
 
 - [rules/security-first.md](rules/security-first.md): default-deny; nothing past the Deno sandbox;
-  no permission that wasn't explicitly specified; run `lint:security`.
+  no permission that wasn't explicitly specified; no React, and no dependency or download without
+  asking; run `lint:security`.
 - [rules/working-together.md](rules/working-together.md): manual testing first, never touch the
-  live app, watched debugging stays in the main thread, pace, plan mode.
+  live app, watched debugging stays in the main thread, work in the foreground, multi-step work in
+  reviewed steps, pace, plan mode.
 - [rules/git.md](rules/git.md): commit and push only when asked, no AI co-author, branches.
 - [rules/writing-style.md](rules/writing-style.md): plain and specific wording, no em dashes, no personal names,
   "Tranquil" not "Pulsar", footnoted sources. Applies to every doc, note, commit and reply.
 - [rules/minimal-surface.md](rules/minimal-surface.md): build only what something in Tranquil's
   own flow will use.
-- [rules/types.md](rules/types.md): TypeScript is fully typed: no `any`, closed name sets as literal
-  types, untyped data typed at one boundary.
+- [rules/types.md](rules/types.md): TypeScript is fully typed: no `any`, types and interfaces in
+  their own files, closed name sets as literal types, untyped data typed at one boundary.
 
 ## Rules by subject
 

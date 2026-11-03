@@ -42,6 +42,42 @@ turn out that Claude Code asks once per repo before loading an import from outsi
 non-starter. A five-minute `claude -p` test in a scratch folder would have shown it, and showed
 that links load with no approval.
 
+## Work in the foreground
+
+Run commands, tests and checks in the foreground, where the person can watch them. Don't use
+background tasks or background agents for them. Use the background only when the person asks for
+it, or when the thing being built needs it (such as a wait that must outlast a turn), and say so.
+
+**Why:** a check the person wanted to see was started as a background task and left them with
+nothing to watch. They asked for everything to run in the foreground.
+
+## Multi-step work goes in reviewed steps
+
+When a plan has several steps, each step is built, reviewed, tested and merged before the next one
+starts. Each step leaves the app working and gives the person something to try.
+
+- **One branch per step.**
+  - Name it `NN-<feature>/<step>`, such as `01-book/workbook-view`.
+  - Use the same name in every repo the step touches.
+  - Cut it from `main` after the previous step has merged.
+- **The loop for each step:**
+  1. Build the step, and run its tests and `lint:security` in the foreground. Don't commit.
+  2. The person reviews the uncommitted changes in VS Code's Source Control view. Make the changes
+     they ask for, still uncommitted.
+  3. When the person says so, commit and push the step branch. Then hand over:
+     - a GitHub compare link per repo
+       (`https://github.com/tranquillabs/<repo>/compare/main...<branch>`);
+     - whether a Window: Reload or a full restart is needed;
+     - what to try.
+  4. The person tries it. Fixes go through the same uncommitted review before each commit.
+  5. When the person says so, merge the step into `main`. The next step starts from there.
+- **A docs step goes last,** because www-tranquil publishes when its `main` is pushed
+  ([git.md](git.md)).
+
+**Why:** the person reads every change before it's committed, sees the whole step again in
+GitHub's comparison, and tests it by hand. A problem is caught in the step that caused it, not
+several steps later.
+
 ## Pace
 
 - No testing loops. Stop after two failed fixes, or about 20 minutes on one problem, and report.

@@ -28,6 +28,28 @@ sandbox gets bypassed.
   add a rule for it. Exceptions only as
   `// deno-lint-ignore tranquil-security/<rule> -- reason`.
 
+## No dependency without asking
+
+- **No React, anywhere:** not in the app, the packages, the test suite, the examples or the
+  fixtures.
+- **No npm package without the person's approval,** named and asked for before it's added. Prefer
+  Deno's standard library (`jsr:@std/*`) and code written here.
+- **Nothing downloads or installs a dependency without asking first.** That includes a command
+  that pulls packages as a side effect: Deno caches every npm package a project's `deno.lock`
+  lists, on any run in that project, whether or not the code imports them.
+  - Run Deno with `--cached-only` when a command shouldn't fetch anything. It covers only the
+    process it's passed to: a script that starts `deno` itself (`lint:security` does) isn't
+    covered, and `deno lint` has no such flag.
+  - To be sure nothing downloads, child processes included, also set `HTTPS_PROXY` and
+    `HTTP_PROXY` to a dead local port (`http://127.0.0.1:9`), so a fetch fails instead.
+  - If a command starts downloading anyway, stop it, say which packages it was fetching and why,
+    and ask before running it again.
+
+**Why:** a `lint:security` run imported one npm package, so Deno downloaded every npm package in
+tranquil-test-suite's lockfile, React among them, with no prompt. The run was then repeated instead
+of being reported. Later, with that import gone and the run under `--cached-only`, the lint's own
+`deno lint` processes downloaded them again, because the lockfile still listed them.
+
 ## Known gaps
 
 - **The CDP port (ADR-0028, proposed).** `src/main-process/start.js` opens
