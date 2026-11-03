@@ -41,7 +41,9 @@ sandbox gets bypassed.
     process it's passed to: a script that starts `deno` itself (`lint:security` does) isn't
     covered, and `deno lint` has no such flag.
   - To be sure nothing downloads, child processes included, also set `HTTPS_PROXY` and
-    `HTTP_PROXY` to a dead local port (`http://127.0.0.1:9`), so a fetch fails instead.
+    `HTTP_PROXY` to a dead local port (`http://127.0.0.1:9`), so a fetch fails instead. Set
+    `NO_PROXY=localhost,127.0.0.1` with them: Deno's `fetch` sends local requests through the
+    proxy too, which breaks a test that talks to a local server or app instance.
   - If a command starts downloading anyway, stop it, say which packages it was fetching and why,
     and ask before running it again.
 
