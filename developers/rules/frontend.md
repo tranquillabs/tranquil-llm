@@ -24,6 +24,23 @@ view. It doesn't cover:
 
 More Svelte-specific packages will be added here over time.
 
+**Where shared UI code lives.** For now, tranquil-automations `ui/common/`: the build, the
+shadow-root mount, the theme mapping and the Skeleton setup. It's kept apart from any one
+feature's components, because it will likely move to a new tranquil-ui repo for every package to
+use (ADR-0032).
+
+**How a Svelte pane is put together** (ADR-0032):
+
+- **An opener** in the feature's `lib/`, which loads the built bundle when the first pane opens.
+- **The shared pane adapter,** `SveltePane`, which answers Pulsar and mounts the component in a
+  shadow root.
+- **A component** in `ui/<feature>/`, which owns what the pane shows and its state.
+- **A service** in the feature's `lib/`, which does the work that needs Node or Pulsar and draws
+  nothing. Components never touch files themselves.
+
+Feature code imports the shared layer only through `ui/common/index.js`, and `ui/common` imports
+nothing outside itself. After a change in `ui/`, run `deno task build` there and commit `dist/`.
+
 ## How to apply
 
 - **Svelte, nothing else.** No React, Vue or other framework. Skeleton also ships React

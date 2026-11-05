@@ -21,8 +21,9 @@ These are the rules it enforces, grouped by what they guard:
 | --- | --- |
 | `no-blanket-permission` | a permission, device or display-media handler that grants without checking |
 | `no-generic-ipc-bridge` | a preload method that takes a channel name from the page |
-| `no-unscoped-deno-permission` | a bare `--allow-*` or `-A`, in code, `bin/` launchers or `deno.json` tasks |
+| `no-unscoped-deno-permission` | a bare `--allow-*` or `-A`, in code, `bin/` launchers or the tasks of any `deno.json` in an owned repo, nested ones included (`lint/deno-tasks.ts`). One exception: a bare `--allow-env` in a task command run under `env -i`, an emptied environment (Vite enumerates the environment, which only the bare flag allows) |
 | `no-string-page-code` | code built as a string and run in a page |
+| `no-markdown-html` | an `atom.ui.markdown.render` call that doesn't pass `html: false`; raw HTML is on by default, and Pulsar's sanitizer runs on its defaults |
 | `no-insecure-webpreferences` | a webview or window without context isolation and sandbox |
 | `no-unbound-server` | `Deno.serve`/`listen` without a hostname (listens on every interface) |
 | `tests-in-test-folder` | a test file in an owned package outside its top-level `test/` |
