@@ -29,10 +29,12 @@ Use the real type. When it is not obvious, reach for these:
 | JSON from outside (a socket, an env var, a file, a reply) | a declared interface, cast once where the data enters, with a comment saying whose contract it is |
 
 - **Types and interfaces go in their own files, apart from code.** They are building blocks, not
-  code. A package's `types/` folder holds them, one file per module they describe, named after it
-  (`types/workbook-format.ts` for `lib/workbook-format.js`). Code and tests import them with
-  `import type`. A types file holds only `type` and `interface` declarations. It's plain `.ts`,
-  not `.d.ts`, so `lint:security`'s type checks cover it.
+  code. A `types/` folder holds them, one file per module they describe, named after it: the
+  package's `types/` for its `lib/` JavaScript (`types/run-text.ts` for `lib/run-text.js`), and a
+  `types/` beside TypeScript in `ui/` (`ui/workbook/types/format.ts` for `ui/workbook/format.ts`),
+  so it moves with that code. Code and tests import them with `import type`. A types file holds
+  only `type` and `interface` declarations. It's plain `.ts`, not `.d.ts`, so `lint:security`'s
+  type checks cover it.
 - **Closed sets of names are literal types, not `string`.** Grants (`Capability`), error codes
   (`ErrorCode`), CDP commands and events (`Commands`, `Events` in `cdp.ts`), IPC channels
   (`CHANNELS`): one `as const` list or union, imported wherever a name is used, so a typo fails
@@ -42,6 +44,11 @@ Use the real type. When it is not obvious, reach for these:
 - **Success and failure are a discriminated union** with literal `ok: true` / `ok: false` (write
   `ok: true as const` in an object literal so it does not widen to `boolean`). Narrow on `ok`
   before reading anything else.
+- **State is one value, not a set of booleans.** What a thing is now is a discriminated union,
+  worked out where its data is read. Where a process is over time is one phase per instance, moved
+  by a typed transition table, and the UI asks the table (`can`) instead of reading a flag. The
+  pattern and the steps to apply it: www-tranquil `drafts/notes/run-state-machine-notes` (the
+  workbook run card).
 - **Prefer inference to casts.** Let a function's return type follow from its code
   (`ReturnType<typeof createFormsRuntime>`), and use overloads where a caller may name a type
   instead of widening the signature.

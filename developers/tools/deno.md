@@ -22,6 +22,11 @@ then `~/.deno/bin/deno`, `/opt/homebrew/bin/deno`, `/usr/local/bin/deno`. No bin
   the editor tools for file changes and a small Deno script for anything that needs code. A
   multi-line `deno eval` with template literals escapes badly in a shell; write a script file in a
   scratch folder instead.
+- **Never edit files from the shell either:** no `perl`, `sed -i`, `awk`, heredocs, `cat >>` or
+  other redirection into a file. Use the editor tools, or a Deno script for a change that needs
+  code. **Why:** a shell substitution once pasted its replacement text over the first line of
+  `runner-capabilities.js`, and another silently did nothing because `@` in the pattern was read as
+  a Perl array.
 - **Deno-only repos:** tranquil-test-suite, www-tranquil, tranquil-llm, tranquil-app-template,
   tranquil-ops-demo. Never write `yarn`, `npm`, `npx` or `node` commands in them, even where a
   `package.json` exists (www-tranquil has one for its dependencies; its npm scripts are not the

@@ -20,26 +20,32 @@ view. It doesn't cover:
 | --- | --- |
 | Components and the design system | Skeleton[^skeleton], its Svelte components. It is built on Tailwind CSS, which it requires |
 | An ORM, if one is needed | Drizzle, through the Svelte CLI's `drizzle` add-on[^drizzle] |
-| Markdown | mdsvex, through the Svelte CLI's `mdsvex` add-on[^mdsvex] |
+| Markdown Tranquil writes itself, at build time | mdsvex, through the Svelte CLI's `mdsvex` add-on[^mdsvex] |
+| Markdown read at run time (from pages, an LLM, a person) | The shared layer's Markdown component: svelte-exmarkdown and rehype-sanitize. Never mdsvex, which compiles Markdown into Svelte code |
 
 More Svelte-specific packages will be added here over time.
 
 **Where shared UI code lives.** For now, tranquil-automations `ui/common/`: the build, the
-shadow-root mount, the theme mapping and the Skeleton setup. It's kept apart from any one
-feature's components, because it will likely move to a new tranquil-ui repo for every package to
-use (ADR-0032).
+shadow-root mount, the theme mapping, the Skeleton setup and the Markdown component. It's kept
+apart from any one feature, because it will likely move to a new tranquil-ui repo for every
+package to use (ADR-0032).
 
 **How a Svelte pane is put together** (ADR-0032):
 
-- **An opener** in the feature's `lib/`, which loads the built bundle when the first pane opens.
+- **A loader** in the feature's `lib/`: Pulsar loads a package's entry with `require`, so this
+  stays plain CommonJS. It loads the built bundle when the first pane opens, and hands the service
+  what it needs from Pulsar and the rest of the package.
 - **The shared pane adapter,** `SveltePane`, which answers Pulsar and mounts the component in a
   shadow root.
-- **A component** in `ui/<feature>/`, which owns what the pane shows and its state.
-- **A service** in the feature's `lib/`, which does the work that needs Node or Pulsar and draws
-  nothing. Components never touch files themselves.
+- **Components** in `ui/<feature>/`, which own what the pane shows and its state.
+- **A service and the feature's other logic** in `ui/<feature>/`, as TypeScript, which do the
+  work that needs Node or Pulsar and draw nothing. Pulsar and the package's other code are passed
+  in, so they are typed and tested with stand-ins. Components never touch files themselves.
 
-Feature code imports the shared layer only through `ui/common/index.js`, and `ui/common` imports
-nothing outside itself. After a change in `ui/`, run `deno task build` there and commit `dist/`.
+Feature code imports the shared layer only through `ui/common/index.js` (Svelte code) or
+`ui/common/core.ts` (plain TypeScript), and `ui/common` imports nothing outside itself. Types go in
+a `types/` folder beside the code they describe. After a change in `ui/`, run `deno task build`
+there and commit `dist/`.
 
 ## How to apply
 

@@ -52,7 +52,7 @@ these files are relative to where they sit in tranquil-llm: `rules/git.md` here 
 | [tools/dev-app.md](tools/dev-app.md) | `yarn start`/`verify`, reloads, reading the app's output, crashes |
 | [tools/test-suite.md](tools/test-suite.md) | running the suites; the isolated app instance for reproducing bugs |
 | [tools/lint-security.md](tools/lint-security.md) | the security lint and its rules |
-| [tools/deno.md](tools/deno.md) | installing Deno, Deno-only repos, no Python, npm tools under Deno |
+| [tools/deno.md](tools/deno.md) | installing Deno, Deno-only repos, no Python, no file edits from the shell, npm tools under Deno |
 | [tools/gh.md](tools/gh.md) | the GitHub CLI's location |
 
 ## Repos
