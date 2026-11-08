@@ -130,6 +130,11 @@ run. Climb only as far as the task needs:
 | `sites=` | the only sites it may act on: `sites=jobs.example.com,*.example.org` |
 | `read=`, `write=`, `net=` | files and hosts, e.g. `read=resume.pdf write=out.json` |
 
+A script acts only on web pages (http and https), with or without `sites=`: never on a local
+file or the browser's own pages, such as its start page. `tabs.find` and `tabs.all` see only web
+tabs. `tabs.active()` is the browser tab in front, or the last one that was; it never opens a tab,
+so with none it fails, and a script that goes to a known site uses `tabs.open(url)`.
+
 ## The SDK form methods
 
 ```ts
