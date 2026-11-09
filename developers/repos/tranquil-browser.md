@@ -17,6 +17,8 @@ website runs this package's preload.
 - `lib/browser-commands.js`: the command table (`SPECS`, `keyToCommandId`, `activeBrowser`).
 - `lib/split-chord.js`: cmd-k + arrow.
 - `lib/ipc.js`: typed channels (`CHANNELS`, `RELAYED`), shared with the main process.
+- `lib/pages.js`: what every page is held to (its settings, the one preload, a window's session
+  name, web pages and the browser's own pages), shared with the main process and the runner.
 - `lib/utils.js`: webview helpers, `callInPage`, renderer IPC handlers.
 - `lib/history-suggestions.js`: URL-bar suggestions (ADR-0021).
 - `lib/browser-find-item.js`: find in page (ADR-0009), a pane item at `tranquil-find://find`.

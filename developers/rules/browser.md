@@ -10,9 +10,23 @@ preload, so it is a security boundary first.
 
 Every page sees `window.electron` from `bp-client.js`. It exposes only `sendToHost`/`receive`,
 restricted to fixed channel sets (`tranquil:rpc`, history changes), plus `tabFocus()` and
-`suggest()`. **Never add a method that takes a channel name from the page.** The webview runs with
-`webpreferences: "contextIsolation=yes, sandbox=yes"`; page permission requests are denied by
-default (`src/main-process/page-permissions.js`).
+`suggest()`. **Never add a method that takes a channel name from the page.** Page permission
+requests are denied by default (`src/main-process/page-permissions.js`).
+
+**What every page is held to lives in `tranquil-browser/lib/pages.js`:** its settings
+(`PAGE_PREFERENCES`: sandbox, context isolation and web security on; Node.js in the page, its
+subframes and workers, insecure content and experimental features off), the one preload a page may
+have, a window's session name (`windowPartition`), what a web page is (`isWebURL`) and which pages
+are the browser's own (`isOwnPage`). The main process sets those settings on every `<webview>`
+before it loads (`cz-init.js`, `will-attach-webview`), whatever the code that created it asked for,
+since Pulsar's window has Node.js and no context isolation.
+
+- **Use the module, never a copy:** the tab view, `cz-init.js`, `har.js`,
+  `window-session-cleanup.js` and the runner (through `tranquil-automations/lib/browser-pages.js`,
+  which finds it through the app) all do. The sandboxed preload, the SDK's `deno/guard.ts` and the
+  security lint can't require it; tranquil-test-suite's `lint/browser_contract_test.ts` holds their
+  copies to it.
+- **A new page setting** goes in `PAGE_PREFERENCES` and in the lint's copy in the same change.
 
 **Why:** until 2026-10-11 the bridge passed `send`/`sendSync`/`invoke`/`receive` through on any
 channel, so any website could reach every `ipcMain` handler (quit, crash a window, clear cookies,

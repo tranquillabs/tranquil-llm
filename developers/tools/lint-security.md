@@ -24,12 +24,12 @@ These are the rules it enforces, grouped by what they guard:
 | `no-unscoped-deno-permission` | a bare `--allow-*` or `-A`, in code, `bin/` launchers or the tasks of any `deno.json` in an owned repo, nested ones included (`lint/deno-tasks.ts`). One exception: a bare `--allow-env` in a task command run under `env -i`, an emptied environment (Vite enumerates the environment, which only the bare flag allows) |
 | `no-string-page-code` | code built as a string and run in a page |
 | `no-markdown-html` | an `atom.ui.markdown.render` call that doesn't pass `html: false`; raw HTML is on by default, and Pulsar's sanitizer runs on its defaults |
-| `no-insecure-webpreferences` | a webview or window without context isolation and sandbox |
+| `no-insecure-webpreferences` | a page setting given its unsafe value (`PAGE_PREFERENCES`: the sandbox, context isolation or web security off; Node.js in a page, its subframes or workers, insecure content or experimental features on), as a property, as a `<webview>` attribute (`nodeintegration`, `disablewebsecurity`, in any case), or in a `webpreferences` string read as Electron reads it (a name on its own is true; `1` and `0` count). `lint/browser_contract_test.ts` holds the settings to tranquil-browser's `lib/pages.js`, and every Electron name the lint uses to tranquil-client's `electron.d.ts` |
 | `no-unbound-server` | `Deno.serve`/`listen` without a hostname (listens on every interface) |
 | `tests-in-test-folder` | a test file in an owned package outside its top-level `test/` |
 | `no-shipped-tests` | a test file the app build (`script/electron-builder.js` `files`) would ship |
 | `no-path-climbing` | a path anchored to the file's folder that climbs two or more levels or names a sibling repo after `../`; runs over tests too (`lint/paths.ts`, see [rules/paths.md](../rules/paths.md)) |
-| `tranquil-types/no-any` | `any` in any repo's TypeScript (tests and fixtures too, plus the website and user-facing script repos), or a comment that silences it (`lint/types.ts`, see [rules/types.md](../rules/types.md)) |
+| `tranquil-types/no-any` | `any` in any repo's TypeScript (tests and fixtures too, hand-written `.d.ts` declarations such as tranquil-rpc's, plus the website and user-facing script repos), or a comment that silences it (`lint/types.ts`, see [rules/types.md](../rules/types.md)) |
 | `llm-files` | an `AGENTS.md`/`CLAUDE.md` in tranquil-llm, a file there without its header line, a code repo whose `CLAUDE.md` or `.claude/CLAUDE.md` is not a link into tranquil-llm, whose `.claude/settings.json` doesn't list `../tranquil-llm`, or whose `AGENTS.md` holds rules; an instruction file in a user-facing repo; a skill that isn't a link into tranquil-llm |
 
 ## Exceptions and new rules

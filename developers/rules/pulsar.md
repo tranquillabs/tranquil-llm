@@ -48,5 +48,11 @@ ppm stub returning `[]`) caused bugs that following Pulsar would have avoided.
   single-click opens nothing. If preview breaks, check that setting (a stale user-config override
   caused it once) before any code.
 - **Any package's settings are readable** with `atom.config.get('<package>.<key>')`, a public API.
+- **A package's `require.resolve` ignores its options.** The `require` Pulsar hands package code
+  (`src/native-compile-cache.js`) has a `resolve(request)` with no second argument, so
+  `{ paths: [...] }` is dropped and the lookup starts from the package's own folder. Plain Node
+  resolves it, so a test outside the app won't show it. To load a module from another folder, use
+  Node's `createRequire(<file in that folder>)`, as tranquil-automations' `lib/browser-pages.js`
+  does to reach the app's `node_modules`.
 
 Related: [owned-packages.md](owned-packages.md), [keyboard.md](keyboard.md).

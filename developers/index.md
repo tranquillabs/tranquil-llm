@@ -27,7 +27,8 @@ these files are relative to where they sit in tranquil-llm: `rules/git.md` here 
 - [rules/minimal-surface.md](rules/minimal-surface.md): build only what something in Tranquil's
   own flow will use.
 - [rules/types.md](rules/types.md): TypeScript is fully typed: no `any`, types and interfaces in
-  their own files, closed name sets as literal types, untyped data typed at one boundary.
+  their own files, closed name sets as literal types, untyped data typed at one boundary, one
+  source for shared names; plain JavaScript typed through JSDoc and checked in the editor.
 
 ## Rules by subject
 
