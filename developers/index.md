@@ -18,8 +18,8 @@ these files are relative to where they sit in tranquil-llm: `rules/git.md` here 
 - [rules/security-first.md](rules/security-first.md): default-deny; nothing past the Deno sandbox;
   no permission that wasn't explicitly specified; no React, and no dependency or download without
   asking; run `lint:security`.
-- [rules/working-together.md](rules/working-together.md): manual testing first, never touch the
-  live app, watched debugging stays in the main thread, work in the foreground, multi-step work in
+- [rules/working-together.md](rules/working-together.md): manual testing first, from a checklist
+  file of exact steps, never touch the live app, watched debugging stays in the main thread, work in the foreground, multi-step work in
   reviewed steps, pace, plan mode.
 - [rules/git.md](rules/git.md): commit and push only when asked, no AI co-author, branches.
 - [rules/writing-style.md](rules/writing-style.md): plain and specific wording, no em dashes, no personal names,
@@ -38,7 +38,7 @@ these files are relative to where they sit in tranquil-llm: `rules/git.md` here 
 | [rules/pulsar.md](rules/pulsar.md) | using Pulsar's workspace, opener, menu, palette or config APIs |
 | [rules/settings.md](rules/settings.md) | adding or reading a package setting |
 | [rules/tests.md](rules/tests.md) | adding or moving a test |
-| [rules/paths.md](rules/paths.md) | reaching another repo, or a fixed place in this one, from code |
+| [rules/paths.md](rules/paths.md) | reaching another repo, a fixed place in this one, or Tranquil's config folder, from code |
 | [rules/browser.md](rules/browser.md) | touching browser tabs, webviews, the page bridge, IPC channels, or code run in pages |
 | [rules/keyboard.md](rules/keyboard.md) | adding or fixing a shortcut, focus handling, menu accelerators |
 | [rules/automations.md](rules/automations.md) | changing the automation runner or SDK |

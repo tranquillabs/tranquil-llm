@@ -43,3 +43,19 @@ review found it in eleven files across three repos.
 tranquil-test-suite), over every owned repo including tests. It flags an anchored path that climbs
 two or more levels, or names a sibling repo after `../`. See
 [tools/lint-security.md](../tools/lint-security.md).
+
+## Tranquil's config folder
+
+The config folder is `~/.tranquil`, unless the app was started with another `ATOM_HOME`, as the
+test suite's isolated instance is. Take it from Pulsar, never build it from the home folder:
+
+- **In a package:** `atom.getConfigDirPath()`, read when it's needed (`lib/deno-config-seed.js`,
+  tranquil-debug's `lib/breakpoints.js`).
+- **In the main process:** `process.env.ATOM_HOME`, which `start.js` sets before anything else runs,
+  with no fallback.
+- **The one exception** is the Deno download cache (`denoCacheDir` in tranquil-automations'
+  `lib/deno.js`), which stays in the home folder's `~/.tranquil` on purpose, so an isolated instance
+  shares it instead of downloading the SDK's dependencies on every launch.
+
+**Why:** `os.homedir()` plus `.tranquil` ignores `ATOM_HOME`, so the isolated instance wrote the
+person's real `automations/deno.json` and breakpoints.

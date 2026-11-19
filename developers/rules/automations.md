@@ -87,6 +87,12 @@ describe that page.
 
 - **No interactive input.** The child runs with `stdin: "ignore"`, and a webview has no
   `window.prompt()`. Inputs come from a file named in the header, or the clipboard.
+- **The run's environment is one list.** The runner sets the `TRANQUIL_*` names (`ENV_NAMES` in
+  `lib/permissions.js`), and the SDK reads them only through `runEnv` (`RUN_ENV_NAMES` in
+  `deno/run-env.ts`). A missing name throws; it never falls back to a value, since every fallback
+  widened what a script could do. Read a name when it's needed, never at module load, so the SDK
+  still loads outside a run. A new name goes in both lists and in the test task's `--allow-env` in
+  `deno.json`; `test/deno/run_env_test.ts` fails until the three agree.
 - **Every CDP call times out at 30 s** (`deno/cdp.ts`). Don't `evaluate` a promise that waits on
   a person; poll with `waitFor`.
 - **`tab.evaluate(fn)` runs through CDP `Runtime.callFunctionOn`**, so it bypasses the page's CSP.

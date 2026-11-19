@@ -6,10 +6,22 @@ How changes are tested, debugged and paced on this project.
 
 ## Manual testing comes first
 
-Make the change, say what to test, and wait. Don't run GUI verification (the `verify` workflow, a
-CDP-driven check) after a change unless asked.
+Make the change, write down what to test, and wait. Don't run GUI verification (the `verify`
+workflow, a CDP-driven check) after a change unless asked.
 
-**Why:** new behavior is exercised by hand before any automated driving.
+**The tests go in a markdown checklist file,** not only in the reply: tranquil-test-suite
+`manual/YYYY-MM-DD-<topic>.md`, dated by when the step was built, on the step's branch there. Each
+step names:
+
+- the exact file to open, as a link relative to the checklist;
+- the exact command, shortcut or palette name, and anything to run first (a full restart, a
+  fixture server);
+- the result to expect, quoted where the app prints it.
+
+The reply links the file and says what changed since the last round.
+
+**Why:** new behavior is exercised by hand before any automated driving. Steps given only in a
+reply were too vague to follow ("run an example automation on a web tab").
 
 ## Don't touch the live app
 

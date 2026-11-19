@@ -19,6 +19,7 @@ The security lint: [tools/lint-security.md](../tools/lint-security.md).
 | `fixtures/` | small tracked files the suites open, and pages served by `serve:fixtures` |
 | `conformance/` | WPT accessible-name conformance for the SDK, with its third-party test data |
 | `lint/` | the security lint (`security.ts` rules, `run-security.ts` runner, `security.jsonc`) and its tests |
+| `manual/` | checklists for trying a step by hand, one per step, dated (`YYYY-MM-DD-<topic>.md`); see [working-together.md](../rules/working-together.md#manual-testing-comes-first) |
 | `TODO.md` | the testing backlog and ideas |
 
 The project opened by the isolated instance is this repo, so fixtures sit where the suites expect
