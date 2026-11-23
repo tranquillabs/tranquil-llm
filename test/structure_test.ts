@@ -51,7 +51,8 @@ Deno.test("every developer file is reachable from developers/index.md", async ()
   const queue = [index];
   while (queue.length) {
     const file = queue.pop()!;
-    const text = await Deno.readTextFile(file);
+    // Code in fenced blocks isn't Markdown: `table[key](value)` there is a call, not a link.
+    const text = (await Deno.readTextFile(file)).replace(/^```[\s\S]*?^```/gm, "");
     for (const m of text.matchAll(/\]\(([^)#\s]+)(#[^)]*)?\)/g)) {
       if (/^[a-z]+:/.test(m[1])) continue;
       const target = resolve(dirname(file), m[1]);

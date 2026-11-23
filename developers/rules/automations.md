@@ -93,6 +93,14 @@ describe that page.
   widened what a script could do. Read a name when it's needed, never at module load, so the SDK
   still loads outside a run. A new name goes in both lists and in the test task's `--allow-env` in
   `deno.json`; `test/deno/run_env_test.ts` fails until the three agree.
+- **What started a run is built and read in one place,** `lib/triggers.js` (`commandTrigger`,
+  `urlTrigger`, `workbookTrigger`, `parseTrigger`, `isAttended`), typed by `types/triggers.ts`
+  from the SDK's `Trigger` in `deno/types/context.ts`. Never write a `kind:value` string or slice one by
+  hand; `test/lib/triggers_test.ts` holds the SDK's parser to the runner's.
+- **`tabs.active()` is decided when the run starts** (`lib/run-tab.js`, kept by run id in
+  `RunManager.startTab`): the focused browser tab, else the one web page showing in a pane. No
+  guess from history; none or several fails, naming `tabs.find`, `tabs.open` and
+  `tabs.triggered`.
 - **Every CDP call times out at 30 s** (`deno/cdp.ts`). Don't `evaluate` a promise that waits on
   a person; poll with `waitFor`.
 - **`tab.evaluate(fn)` runs through CDP `Runtime.callFunctionOn`**, so it bypasses the page's CSP.

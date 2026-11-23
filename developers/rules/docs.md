@@ -43,6 +43,16 @@ save it in `~/Documents/Tranquil/Plans/` (dated, `YYYY-MM-DD-topic.md`) and link
 
 **Why:** each unit of work documents itself in one place, in step with the code.
 
+## Learnings
+
+A lesson from a review, worth reusing beyond the change that taught it (how a piece of code became
+easier to read, say), goes in tranquil-llm, not www-tranquil:
+`developers/learnings/YYYY-MM-DD-<topic>.md`, with frontmatter `title` and `description` above the
+header line, linked from the Learnings list in `developers/index.md`. Keep it short and mostly
+code: a line or two of context, then per change the before and after code and the improvement in a
+line; end with a few bullets on where the pattern stops paying. No essay. A delivery note may link
+it; the note says what shipped, the learning says what to do next time.
+
 ## Pages kept in step with code
 
 - **API reference pages** embed `.d.ts` and signature excerpts, so they drift silently. Update them

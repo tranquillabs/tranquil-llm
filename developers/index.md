@@ -83,6 +83,15 @@ One file per repo, linked as that repo's `CLAUDE.md`:
 - [skills/tranquil-docs/](skills/tranquil-docs/SKILL.md): reviewing and authoring www-tranquil doc
   pages. Linked into `www-tranquil/.claude/skills/`.
 
+## Learnings
+
+What reviews taught, each a before and after with why the after is better, and where the pattern
+stops paying. Newest last:
+
+- [2026-11-05 flags that describe and flags that guard: a union for what a thing is, a table for where it is](learnings/2026-11-05-run-state-machine.md)
+- [2026-11-09 lists of names: checked against where they come from, held to one source](learnings/2026-11-09-lists-of-names.md)
+- [2026-11-23 reading a tagged string: from hand-sliced checks to a table you can read at a glance](learnings/2026-11-23-trigger-parsing.md)
+
 ## Adding to this repo
 
 A new file goes in the folder for its kind, opens with the header line, and is linked from this

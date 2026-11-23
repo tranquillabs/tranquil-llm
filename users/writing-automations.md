@@ -103,8 +103,9 @@ what it may do in its permission header. So it needs no build setup: no `deno.js
    button), and logs what it would do, without clicking, typing or uploading. A missing part is
    listed with the field's markup. Everything else in the script runs as usual (navigation, page
    code, files, network), so a script that does more than fill a form does it.
-6. **Run.** Ask them to run **SDK: Run Automation**. The Runs panel shows the output, the
-   action log, the script's `context.result`, and any `FieldError`.
+6. **Run.** Ask them to run **SDK: Run Automation** with the page showing beside the script
+   (for a script that uses `tabs.active()`). The Runs panel shows the output, the action log, the
+   script's `context.result`, and any `FieldError`.
 7. **On failure,** read the `FieldError` code (table below) and fix what it names. Don't get past
    it by raising a grant, adding a site or catching it, unless the person decided so. Then go back
    to step 4, and to step 5 if you changed a target or a custom parts map. If the run had already
@@ -132,8 +133,19 @@ run. Climb only as far as the task needs:
 
 A script acts only on web pages (http and https), with or without `sites=`: never on a local
 file or the browser's own pages, such as its start page. `tabs.find` and `tabs.all` see only web
-tabs. `tabs.active()` is the browser tab in front, or the last one that was; it never opens a tab,
-so with none it fails, and a script that goes to a known site uses `tabs.open(url)`.
+tabs.
+
+Which tab a script gets:
+
+- `tabs.active()` is the page the person meant, decided when the run starts: the browser tab
+  with focus, else the one web page showing in a pane (beside the script, say). With no web page
+  showing, or more than one, it fails; it never guesses and never opens a tab.
+- A script that works on a known site names it: `tabs.find(url)` for a page that's open,
+  `tabs.open(url)` to open it.
+- `tabs.triggered()` is the tab whose page load started the run (a URL-triggered script).
+- `context.trigger` says what started the run: `{ kind: "manual" }`, `{ kind: "command", name }`
+  (a registered command), `{ kind: "url", url }` (a page load), or `{ kind: "workbook", path,
+  folder }` (a workbook step; `folder` is the workbook's data folder).
 
 ## The SDK form methods
 

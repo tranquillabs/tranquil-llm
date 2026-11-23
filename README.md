@@ -43,6 +43,8 @@ write an automation, and it must never be read as instructions for working on an
   - `developers/tools/`: how to use one tool;
   - `developers/repos/`: facts specific to one repo;
   - `developers/skills/`: agent skills, linked into the repos that use them;
+  - `developers/learnings/`: learning pieces from reviews, one lesson per file, dated
+    (`YYYY-MM-DD-<topic>.md`), with frontmatter `title` and `description` above the header line;
   - `users/`: one user guide per file.
 - **Adding a file:** put it in the right folder, give it the header line, and link it from
   `developers/index.md` (developers) or name it from its pointer (users).

@@ -60,7 +60,8 @@ Use the real type. When it is not obvious, reach for these:
   or methods, or of Deno permissions, is tied to where those names come from:
   `satisfies readonly Deno.PermissionName[]` with a check that no name is missing, or a test that
   reads `electron.d.ts` when the declarations can't be imported. A typo, or a name the project
-  drops, then fails a check instead of quietly matching nothing.
+  drops, then fails a check instead of quietly matching nothing. The review that found this:
+  [learnings/2026-11-09-lists-of-names.md](../learnings/2026-11-09-lists-of-names.md).
 - **Use a package's own declarations; fix them at the source.** Type against what a package
   publishes (`import("tranquil-rpc").RunnerContext`, `typeof import("tranquil-rpc")`), never a
   local stand-in. When they're wrong, correct them in that package, along with any page that quotes
@@ -81,7 +82,8 @@ Use the real type. When it is not obvious, reach for these:
 - **State is one value, not a set of booleans.** What a thing is now is a discriminated union,
   worked out where its data is read. Where a process is over time is one phase per instance, moved
   by a typed transition table, and the UI asks the table (`can`) instead of reading a flag. The
-  pattern and the steps to apply it: www-tranquil `drafts/notes/run-state-machine-notes` (the
+  pattern and the steps to apply it:
+  [learnings/2026-11-05-run-state-machine.md](../learnings/2026-11-05-run-state-machine.md) (the
   workbook run card).
 - **Prefer inference to casts.** Let a function's return type follow from its code
   (`ReturnType<typeof createFormsRuntime>`), and use overloads where a caller may name a type
